@@ -1,12 +1,24 @@
 import React, { Component } from "react";
-import productList from "../data/productList";
+import { Product } from "../requests";
+import { Link } from 'react-router-dom'
+import "../styles/ProductsIndexPage.css";
 
 class ProductsIndexPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: [...productList]
+      products: [],
+      isLoading: true
     };
+  }
+
+  componentDidMount() {
+    Product.all().then(products => {
+      this.setState({
+        products: products,
+        isLoading: false,
+      });
+    });
   }
 
   deleteProduct(id) {
@@ -16,18 +28,31 @@ class ProductsIndexPage extends Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+			return (
+				<main>
+					<h3>Loading...</h3>
+				</main>
+			);
+    }
+    
     return (
       <div className="ProductsIndexPage">
         <h1>Products</h1>
         <ul>
           {this.state.products.map(product => {
             return (
-              <li key={product.id}>
+              <li key={product.id} className="list-item">
                 <small>
                   <em>{product.id}</em>
                 </small>
-                <a href="#">{product.title}</a>
-                <button className="btn delete-btn" onClick={() => this.deleteProduct(product.id)}>
+                <Link to={`/products/${product.id}`}>
+                  {product.title}
+                </Link>
+                <button
+                  className="btn delete-btn"
+                  onClick={() => this.deleteProduct(product.id)}
+                >
                   Delete
                 </button>
               </li>

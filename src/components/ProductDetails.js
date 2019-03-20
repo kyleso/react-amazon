@@ -7,7 +7,7 @@ function ProductDetails(props) {
       <p>
         {props.description}
         <br/>
-        {props.price}
+        Price: ${props.price}
       </p>
       <small>Sold by {props.seller.full_name} at {props.created_at}</small>
     </div>

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import ProductDetails from "./ProductDetails";
 import ReviewList from "./ReviewList";
-import productInfo from "../data/productInfo";
 import "../styles/page.css";
+import { Product } from "../requests";
 
 // const { title, description, created_at, seller, reviews, price } = product;
 // const ProductShowPage = () => {
@@ -27,11 +27,19 @@ class ProductShowPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: {
-        ...productInfo
-      }
+      product: null,
+      isLoading: true,
     };
     this.deleteReview = this.deleteReview.bind(this);
+  }
+  
+  componentDidMount() {
+    Product.one(this.props.match.params.id).then(product => {
+      this.setState({
+        product: product,
+        isLoading: false,
+      })
+    })
   }
 
   deleteReview(reviewId) {
@@ -48,6 +56,13 @@ class ProductShowPage extends Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <main>
+          <h3>Loading ....</h3>
+        </main>
+      )
+    }
     const { product } = this.state;
     return (
       <div className="ProductShowPage">
