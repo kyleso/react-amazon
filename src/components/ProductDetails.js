@@ -9,7 +9,7 @@ function ProductDetails(props) {
         <br/>
         {props.price}
       </p>
-      <small>Sold by {props.seller.full_name} at {props.created_at.toLocaleString()}</small>
+      <small>Sold by {props.seller.full_name} at {props.created_at}</small>
     </div>
   )
 }

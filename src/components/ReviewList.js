@@ -4,14 +4,12 @@ import "../styles/ReviewList.css";
 
 const ReviewList = props => {
   return (
-    <ul>
+    <ul className="ReviewList">
       {props.reviews.map(review => (
         <li key={review.id}>
           <ReviewDetails
-            body={review.body}
-            reviewer={review.reviewer}
-            created_at={review.created_at}
-            rating={review.rating}
+            {...review}
+            onDeleteClick={id => props.onReviewDeleteClick(id)}
           />
         </li>
       ))}

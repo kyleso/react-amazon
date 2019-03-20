@@ -11,8 +11,9 @@ function ReviewDetails(props) {
         rating={props.rating}
       />
       <div>
-        <small>Reviewed by {props.reviewer.full_name} at {props.created_at.toLocaleString()}</small>
+        <small>Reviewed by {props.reviewer.full_name} at {props.created_at}</small>
       </div>
+      <button className="btn delete-btn" onClick={id => { props.onDeleteClick(props.id) }}>Delete</button>
     </div>
   )
 }
